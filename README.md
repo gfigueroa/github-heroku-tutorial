@@ -103,7 +103,7 @@ To get the full path of your website directory, an easy way is to open the Windo
 Then, click on the navigation bar at the top and copy the whole path with `Ctrl + c`:
 ![Directory 2](./directory2.png)
 
-Go back to the command line,type the following command, and press `Enter`:
+Go back to the command line, type the `cd` command, paste your path, and press `Enter`:
 ```sh
 $ cd paste-your-path-here
 ```
@@ -131,6 +131,156 @@ You can then make sure that you are on the right directory by entering the follo
 $ ls
 ```
 
-#### 
+#### Upload with Git
+Now that we're in our project folder on the command line/terminal, we will perform some Git commands in order to upload our website to GitHub. 
+
+Remember that URL from GitHub we got a note of a few steps back? We're going to copy it and paste it in a second on the command line/terminal. 
+![Copy URL](./copy_url.png)
+
+After copying the URL, enter the following commands (only enter the text that appears after a dollar sign `$`):
+```sh
+$ git init
+Initialized empty Git repository in D:/Comm Design/My Website/.git/
+$ git remote add origin paste-your-url-here
+
+$ git remote -v
+origin  https://github.com/gfigueroa/my-website.git (fetch)
+origin  https://github.com/gfigueroa/my-website.git (push)
+```
+The first command `git init` sets the current directory as a local Git repository. The second command `git remote add origin...` adds our remote repository in GitHub (the one we will upload to). The third command `git remote -v` is to check that the remote repository was successfully added.
+
+Now, we will **add** all our files to the local repository, **commit** the changes (more on this on our next tutorial), and **push** everything (upload) to our remote repository on GitHub. Enter the following commands:
+```sh
+$ git add .
+
+$ git commit -m "Initial commit"
+[master (root-commit) 21a58cc] Initial commit
+ Committer: Figueroa <Figueroa>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 3 files changed, 10 insertions(+)
+ create mode 100644 index.html
+ create mode 100644 script.js
+ create mode 100644 style.css
+ 
+$ git push origin master
+Username for 'https://github.com': gfigueroa
+Password for 'https://gfigueroa@github.com':
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 377 bytes | 0 bytes/s, done.
+Total 4 (delta 0), reused 0 (delta 0)
+To https://github.com/gfigueroa/my-website.git
+ * [new branch]      master -> master
+ 
+```
+The third command `git push origin master` might ask you to enter your GitHub username and password.
+**Note:** When you type in the password, you won't be able to see what you're typing!
+
+Ready! Our project should now be available on GitHub for the whole world to see! Just refresh your GitHub repository page on the browser and you will see what's inside.
+![GitHub repo](./github_repo.png)
+
+Mine is available at https://github.com/gfigueroa/my-website.
 
 ## II. Host a website on Heroku
+Now that our project code is publicly available at GitHub, it's time to actually publish the website so that anybody anywhere in the world can access it on a browser. For that, we will be using a hosting provider called [Heroku](http://www.heroku.com/).
+
+Heroku is a cloud Platform-as-a-Service (PaaS) supporting several programming languages that is used as a web application deployment model. We will only deploy a static website to Heroku on this tutorial.
+
+### 1. Create an account on Heroku
+Sign up for a new account on http://signup.heroku.com/.
+Select `PHP` as the Primary Development Language.
+*You need to confirm your email account before continuing.*
+
+### 2. Create a Heroku app
+We need to create a new Heroku App where our website will be hosted. After logging in to Heroku, click on the `Create New App` button.
+
+On the following screen, you will need to enter an app name (this must be unique across the entire world). Try using the name `FirstInitialLastName-my-website`. For example, the app name I will use is (unfortunately, `gfigueroa-my-website` was already used!):
+```
+gcalderon-my-website
+```
+**Note:** We need to make note of this app name, as we will need it later!
+Select `United States` as the Runtime Selection and click on the `Create App` button.
+
+### 3. Download and install the Heroku CLI
+We will need to install yet another piece of software on our computer called the Heroku CLI (also known as Heroku Toolbelt). This software will also run on the command line/terminal.
+
+Go to the following [link](http://devcenter.heroku.com/articles/heroku-cli) and follow the steps required for your operating system until you do the **Verify your installation** step.
+**Note:** Do not do anything from the **Getting started** step onwards.
+
+*You might need to close and reopen your command line/terminal before getting the Heroku CLI to work.*
+
+### 4. Upload your website to Heroku
+#### Add PHP file
+First, we will need to add a new file into our website folder on our computer. This file will tell Heroku how to run our website.
+Create a new file named `index.php` and put the following code inside it using your favorite text editor:
+```php
+<?php header( 'Location: /index.html' ) ;  ?>
+```
+Save the file.
+
+Go back to the command line/terminal and navigate to your project folder. If you enter the `dir` (Windows) or `ls` (Mac) command, you should be able to see the new `index.php` file that we just added.
+
+#### Log in to Heroku in the command line/terminal
+Type in the following command to log in to Heroku from the command line/terminal:
+```sh
+$ heroku login
+heroku-cli: Installing CLI... 17.14MB/17.14MB
+Enter your Heroku credentials:
+Email: gerardo.figueroa@has.hc.edu.tw
+Password: ***********
+Logged in as gerardo.figueroa@has.hc.edu.tw
+```
+Note that you will need to log in with the email and password you entered on Heroku.
+
+#### Create remote repository for Heroku
+Now, we need to add a new remote repository in our directory that will point to the Heroku app. 
+```sh
+$ heroku git:remote -a your-heroku-app-name
+set git remote heroku to https://git.heroku.com/gcalderon-my-website.git
+```
+Make sure there are two remote repositories in your directory by entering the following command:
+```sh
+$ git remote -v
+heroku  https://git.heroku.com/gcalderon-my-website.git (fetch)
+heroku  https://git.heroku.com/gcalderon-my-website.git (push)
+origin  https://github.com/gfigueroa/my-website.git (fetch)
+origin  https://github.com/gfigueroa/my-website.git (push)
+```
+
+#### Deploy your website
+Now, we will need to **add** the new PHP file, **commit** the changes, and **push** the entire thing to our Heroku repository:
+```sh
+$ git add .
+
+$ git commit -m "Added PHP file for Heroku"
+
+$ git push heroku master
+```
+After entering those three commands, the last output lines should look something like this:
+```sh
+...
+remote: -----> Compressing...
+remote:        Done: 13.6M
+remote: -----> Launching...
+remote:        Released v3
+remote:        https://gcalderon-my-website.herokuapp.com/ deployed to Heroku
+remote:
+remote: Verifying deploy... done.
+To https://git.heroku.com/gcalderon-my-website.git
+ * [new branch]      master -> master
+```
+
+#### Access your website
+Eureka! Now we should be able to access our website on a browser by going to the link given to you after pushing your app to Heroku. In my case it was https://gcalderon-my-website.herokuapp.com/.
