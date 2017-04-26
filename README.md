@@ -1,4 +1,5 @@
 # Publish your website on the Internet with GitHub and Heroku
+Created by: [Gerardo Figueroa](http://github.com/gfigueroa)
 
 **TL;DR** This is a step-by-step tutorial for uploading your projects to [GitHub](http://github.com/) and hosting your static websites on [Heroku](http://heroku.com). We will use Git and the command line for doing tasks.
 
