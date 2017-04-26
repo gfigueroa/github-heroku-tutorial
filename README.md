@@ -22,6 +22,7 @@ If you already have other repositories on GitHub, you can create a new one by cl
 We will now fill in some information about the new repository we are creating. In this tutorial, we will create a simple website on our computer and upload it to GitHub and Heroku.
 
 For repository name, we will use `my-website`. In the description, we will write `A blank website for testing`, choose `Public` repository. Then, click on `Create repository`. 
+
 **Note:** Unless you have previously created a repository with this name, everything should work out perfectly.
 
 ![Create Repository](./create_repo.png)
